@@ -35,27 +35,27 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Mail,
-      title: "Email Us",
+      title: "Email Yuboring",
       content: "hello@luxe.com",
-      description: "We'll respond within 24 hours",
+      description: "24 soat ichida javob beramiz",
     },
     {
       icon: Phone,
-      title: "Call Us",
+      title: "Qo'ng'iroq Qiling",
       content: "+1 (234) 567-890",
-      description: "Mon-Fri from 8am to 5pm EST",
+      description: "Dushanba-Juma 8:00-17:00 EST",
     },
     {
       icon: MapPin,
-      title: "Visit Us",
+      title: "Bizga Tashrif Buyuring",
       content: "123 Fashion Ave, New York, NY 10001",
-      description: "Showroom open by appointment",
+      description: "Kengaytirish uchrashuvlari uchun ochilgan",
     },
     {
       icon: Clock,
-      title: "Business Hours",
-      content: "Mon-Fri: 8am-6pm EST",
-      description: "Weekend: 10am-4pm EST",
+      title: "Ish Soatlari",
+      content: "Dushanba-Juma: 8:00-18:00 EST",
+      description: "Dam olish kunlari: 10:00-16:00 EST",
     },
   ]
 
@@ -67,11 +67,11 @@ export default function Contact() {
 
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 px-2">
-            Get In <span className="neon-accent">Touch</span>
+            <span className="neon-accent">Bog'lanish</span>
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4">
-            Have questions about our collections? Want to collaborate? We'd love to hear from you. 
-            Reach out and let's create something amazing together.
+            Kolleksiyalarimiz haqida savollaringiz bormi? Hamkorlik qilishni xohlaysizmi? Sizdan eshitishdan mamnun bo'lamiz. 
+            Aloqa qiling va birga ajoyib narsa yarataylik.
           </p>
         </div>
 
@@ -81,7 +81,7 @@ export default function Contact() {
             <div className="glassmorphism p-6 sm:p-8 rounded-2xl">
               <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
                 <MessageCircle className="text-accent" size={24} />
-                Contact Information
+                Kontakt Ma'lumotlari
               </h3>
               
               <div className="space-y-4 sm:space-y-6">
@@ -103,12 +103,12 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div className="glassmorphism p-6 sm:p-8 rounded-2xl">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Send us a message</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Bizga xabar yuboring</h3>
             
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">Name *</label>
+                  <label htmlFor="name" className="block text-sm font-medium mb-2">Ism *</label>
                   <input
                     type="text"
                     id="name"
@@ -117,7 +117,7 @@ export default function Contact() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm sm:text-base"
-                    placeholder="Your name"
+                    placeholder="Ismingiz"
                   />
                 </div>
                 <div>
@@ -130,13 +130,13 @@ export default function Contact() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm sm:text-base"
-                    placeholder="your@email.com"
+                    placeholder="sizning@email.com"
                   />
                 </div>
               </div>
               
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject *</label>
+                <label htmlFor="subject" className="block text-sm font-medium mb-2">Mavzu *</label>
                 <select
                   id="subject"
                   name="subject"
@@ -145,17 +145,17 @@ export default function Contact() {
                   required
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm sm:text-base"
                 >
-                  <option value="">Select a subject</option>
-                  <option value="general">General Inquiry</option>
-                  <option value="orders">Orders & Shipping</option>
-                  <option value="collaboration">Collaboration</option>
-                  <option value="press">Press & Media</option>
-                  <option value="support">Customer Support</option>
+                  <option value="">Mavzuni tanlang</option>
+                  <option value="general">Umumiy Savol</option>
+                  <option value="orders">Buyurtmalar va Yetkazib Berish</option>
+                  <option value="collaboration">Hamkorlik</option>
+                  <option value="press">Matbuot va OAV</option>
+                  <option value="support">Mijozlar Yordami</option>
                 </select>
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
+                <label htmlFor="message" className="block text-sm font-medium mb-2">Xabar *</label>
                 <textarea
                   id="message"
                   name="message"
@@ -164,7 +164,7 @@ export default function Contact() {
                   required
                   rows={5}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm sm:text-base resize-none"
-                  placeholder="Tell us how we can help you..."
+                  placeholder="Qanday yordam bera olishimizni ayting..."
                 />
               </div>
               
@@ -173,7 +173,7 @@ export default function Contact() {
                 className="w-full glow-button px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all text-sm sm:text-base flex items-center justify-center gap-2"
               >
                 <Send size={18} />
-                Send Message
+                Xabar Yuborish
               </button>
             </form>
           </div>

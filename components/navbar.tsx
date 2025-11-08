@@ -63,7 +63,7 @@ export default function Navbar() {
           {/* Logo */}
           <button 
             onClick={() => scrollToSection("hero")}
-            className="text-xl sm:text-2xl font-bold tracking-wider hover:text-accent transition-colors"
+            className="text-xl sm:text-2xl font-bold tracking-wider hover:text-accent transition-colors animate-fade-in-left animate-stagger-1"
           >
             <span className="neon-accent">LUXE</span>
           </button>
@@ -72,27 +72,29 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
             <button 
               onClick={() => scrollToSection("new-collection")}
-              className="hover:text-accent transition-colors text-sm uppercase tracking-wide"
+              className="hover:text-accent transition-colors text-sm uppercase tracking-wide animate-fade-in-up animate-stagger-2"
             >
-              Collection
+              Kolleksiya
             </button>
             <button 
               onClick={() => scrollToSection("about")}
-              className="hover:text-accent transition-colors text-sm uppercase tracking-wide"
+              className="hover:text-accent transition-colors text-sm uppercase tracking-wide animate-fade-in-up animate-stagger-3"
             >
-              About
+              Haqida
             </button>
             <button 
               onClick={() => scrollToSection("contact")}
-              className="hover:text-accent transition-colors text-sm uppercase tracking-wide"
+              className="hover:text-accent transition-colors text-sm uppercase tracking-wide animate-fade-in-up animate-stagger-4"
             >
-              Contact
+              Bog'lanish
             </button>
           </div>
 
           {/* Right Section */}
           <div className="flex items-center gap-2 sm:gap-4 relative" ref={dropdownRef}>
-            <button className="hidden sm:block p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px]">
+            <button 
+              className="hidden sm:block p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] animate-fade-in-right animate-stagger-5"
+            >
               <Search size={20} />
             </button>
             
@@ -100,7 +102,7 @@ export default function Navbar() {
             <div className="relative">
               <button 
                 onClick={handleCartClick}
-                className="relative p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all group min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center"
+                className="relative p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all group min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center animate-fade-in-right animate-stagger-6"
               >
                 <ShoppingCart size={20} />
                 {cartCount > 0 && (
@@ -119,7 +121,7 @@ export default function Navbar() {
             
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="md:hidden p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all min-w-[44px] min-h-[44px] flex items-center justify-center animate-fade-in-right"
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -133,25 +135,25 @@ export default function Navbar() {
               onClick={() => scrollToSection("new-collection")}
               className="block hover:text-accent transition-colors text-sm uppercase tracking-wide py-2 min-h-[44px] flex items-center w-full text-left"
             >
-              Collection
+              Kolleksiya
             </button>
             <button 
               onClick={() => scrollToSection("about")}
               className="block hover:text-accent transition-colors text-sm uppercase tracking-wide py-2 min-h-[44px] flex items-center w-full text-left"
             >
-              About
+              Haqida
             </button>
             <button 
               onClick={() => scrollToSection("contact")}
               className="block hover:text-accent transition-colors text-sm uppercase tracking-wide py-2 min-h-[44px] flex items-center w-full text-left"
             >
-              Contact
+              Bog'lanish
             </button>
             <div className="pt-2 border-t border-white/10">
-              <button className="flex items-center gap-2 hover:text-accent transition-colors text-sm uppercase tracking-wide py-2 min-h-[44px] w-full">
+              <div className="flex items-center gap-2 hover:text-accent transition-colors text-sm uppercase tracking-wide py-2 min-h-[44px] w-full opacity-50">
                 <Search size={16} />
-                <span>Search</span>
-              </button>
+                <span>Qidirish</span>
+              </div>
             </div>
           </div>
         )}

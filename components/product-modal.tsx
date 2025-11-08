@@ -60,61 +60,61 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
         onClick={onClose}
       />
       
-      {/* Modal Content */}
-      <div className="relative bg-background border border-border rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        {/* Close Button */}
+      {/* Modal Content - True Full Screen Modal Window */}
+      <div className="relative bg-background border border-border rounded-2xl w-screen h-screen max-w-none max-h-none overflow-hidden">
+        {/* Close Button - Much Larger */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-colors text-white cursor-pointer"
+          className="absolute top-6 right-6 z-10 p-4 bg-black/70 hover:bg-black/90 rounded-full transition-colors text-white cursor-pointer shadow-xl"
         >
-          <X size={20} />
+          <X size={24} />
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 sm:p-8">
-          {/* Product Image */}
-          <div className="space-y-4">
-            <div className="relative aspect-square overflow-hidden rounded-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+          {/* Product Image - Full Height */}
+          <div className="flex items-center justify-center p-8 lg:p-12">
+            <div className="relative w-full max-w-xl aspect-square overflow-hidden rounded-2xl shadow-2xl">
               {product.badge && (
-                <div className="absolute top-4 left-4 z-20 bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wide">
+                <div className="absolute top-6 left-6 z-20 bg-accent text-accent-foreground px-4 py-2 rounded-full text-lg font-bold uppercase tracking-wide">
                   {product.badge}
                 </div>
               )}
               <img
                 src={product.image || "/placeholder.svg"}
                 alt={product.name}
-                className="w-full h-full object-cover cursor-pointer"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
 
-          {/* Product Details */}
-          <div className="space-y-6">
+          {/* Product Details - Full Height */}
+          <div className="flex flex-col justify-center p-8 lg:p-12 space-y-8">
             <div>
-              <p className="text-sm text-muted-foreground uppercase tracking-wide mb-2">
+              <p className="text-base text-muted-foreground uppercase tracking-wider mb-3">
                 {product.category}
               </p>
-              <h1 className="text-2xl sm:text-3xl font-bold mb-4">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
                 {product.name}
               </h1>
-              <div className="text-3xl font-bold text-accent mb-6">
+              <div className="text-4xl font-bold text-accent mb-8">
                 {product.price}
               </div>
             </div>
 
             {/* Rating */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <div className="flex gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={16} className="fill-accent text-accent cursor-pointer" />
+                {new Array(5).fill(null).map((_, i) => (
+                  <Star key={i} size={20} className="fill-accent text-accent cursor-pointer" />
                 ))}
               </div>
-              <span className="text-sm text-muted-foreground cursor-pointer">(4.9/5 - 127 reviews)</span>
+              <span className="text-lg text-muted-foreground cursor-pointer">(4.9/5 - 127 reviews)</span>
             </div>
 
             {/* Description */}
             <div>
-              <h3 className="font-semibold mb-2">Description</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <h3 className="text-xl font-semibold mb-4">Description</h3>
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 Experience the future of fashion with this revolutionary piece. 
                 Crafted with premium materials and innovative design, this item represents 
                 the pinnacle of luxury and comfort. Perfect for those who dare to stand out.
@@ -123,8 +123,8 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
 
             {/* Features */}
             <div>
-              <h3 className="font-semibold mb-2">Key Features</h3>
-              <ul className="space-y-1 text-muted-foreground text-sm">
+              <h3 className="text-xl font-semibold mb-4">Key Features</h3>
+              <ul className="space-y-2 text-lg text-muted-foreground">
                 <li className="cursor-pointer">• Premium sustainable materials</li>
                 <li className="cursor-pointer">• AI-optimized fit technology</li>
                 <li className="cursor-pointer">• Temperature-regulating fabric</li>
@@ -134,13 +134,13 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
 
             {/* Size Selection */}
             <div>
-              <h3 className="font-semibold mb-3">Select Size</h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+              <h3 className="text-xl font-semibold mb-4">Select Size</h3>
+              <div className="grid grid-cols-3 gap-4">
                 {sizes.map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`p-3 border rounded-lg transition-all text-sm font-medium cursor-pointer ${
+                    className={`p-4 border-2 rounded-xl transition-all text-lg font-semibold cursor-pointer ${
                       selectedSize === size
                         ? "border-accent bg-accent/20 text-accent"
                         : "border-border hover:border-accent hover:bg-accent/10"
@@ -154,44 +154,44 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
 
             {/* Color Selection */}
             <div>
-              <h3 className="font-semibold mb-3">Select Color</h3>
-              <div className="flex gap-3">
+              <h3 className="text-xl font-semibold mb-4">Select Color</h3>
+              <div className="flex gap-4">
                 {colors.map((color, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedColor(index)}
-                    className={`w-10 h-10 rounded-full transition-all cursor-pointer ${
+                    className={`w-12 h-12 rounded-full transition-all cursor-pointer ${
                       color.class
-                    } ${selectedColor === index ? "ring-2 ring-accent ring-offset-2 ring-offset-background" : ""}`}
+                    } ${selectedColor === index ? "ring-4 ring-accent ring-offset-4 ring-offset-background" : ""}`}
                     title={color.name}
                   />
                 ))}
               </div>
               {selectedColor !== null && (
-                <p className="text-sm text-muted-foreground mt-2 cursor-pointer">
+                <p className="text-lg text-muted-foreground mt-3 cursor-pointer">
                   Selected: {colors[selectedColor].name}
                 </p>
               )}
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-6 pt-6">
               <button 
                 onClick={handleAddToCart}
                 disabled={isAddToCartDisabled}
-                className="flex-1 glow-button px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="flex-1 glow-button px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-xl font-semibold hover:scale-105 transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
               >
-                <ShoppingBag size={18} />
+                <ShoppingBag size={22} />
                 {isAddingToCart ? "Adding..." : "Add to Cart"}
               </button>
-              <button className="p-3 glassmorphism hover:bg-white/10 rounded-lg transition-all cursor-pointer">
-                <Heart size={20} />
+              <button className="p-4 glassmorphism hover:bg-white/10 rounded-xl transition-all cursor-pointer">
+                <Heart size={24} />
               </button>
             </div>
 
             {/* Size Alert */}
             {!selectedSize && (
-              <p className="text-sm text-yellow-500 cursor-pointer">
+              <p className="text-lg text-yellow-500 cursor-pointer">
                 Please select a size to add to cart
               </p>
             )}

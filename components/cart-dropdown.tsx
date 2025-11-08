@@ -27,11 +27,11 @@ export default function CartDropdown({ isOpen, onClose }: CartDropdownProps) {
         <div className="flex items-center justify-between p-4 border-b border-border">
           <h3 className="text-lg font-semibold flex items-center gap-2">
             <ShoppingBag size={20} />
-            Shopping Cart ({items.length})
+            Savat ({items.length})
           </h3>
           <button
             onClick={onClose}
-            className="p-1 hover:bg-white/10 rounded-lg transition-colors"
+            className="p-1 hover:bg-white/10 rounded-lg transition-colors flex items-center justify-center"
           >
             <X size={18} />
           </button>
@@ -42,8 +42,8 @@ export default function CartDropdown({ isOpen, onClose }: CartDropdownProps) {
           {items.length === 0 ? (
             <div className="p-8 text-center text-muted-foreground">
               <ShoppingBag size={48} className="mx-auto mb-4 opacity-50" />
-              <p>Your cart is empty</p>
-              <p className="text-sm mt-1">Add some products to get started</p>
+              <p>Savatingiz bo'sh</p>
+              <p className="text-sm mt-1">Boshlash uchun mahsulot qo'shing</p>
             </div>
           ) : (
             <div className="p-4 space-y-3">
@@ -109,17 +109,17 @@ export default function CartDropdown({ isOpen, onClose }: CartDropdownProps) {
         {items.length > 0 && (
           <div className="border-t border-border p-4 space-y-3 bg-background">
             <div className="flex items-center justify-between">
-              <span className="font-semibold">Total:</span>
+              <span className="font-semibold">Jami:</span>
               <span className="text-lg font-bold text-accent">{getTotalPrice()}</span>
             </div>
             <button className="w-full glow-button px-4 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all">
-              Checkout
+              Buyurtma Berish
             </button>
             <button 
               onClick={onClose}
               className="w-full px-4 py-2 glassmorphism hover:bg-white/10 transition-all font-medium"
             >
-              Continue Shopping
+              Xaridni Davom Ettirish
             </button>
           </div>
         )}

@@ -42,16 +42,16 @@ export default function NewCollection() {
         {/* Background blur elements */}
         <div className="absolute -top-40 -left-40 w-80 h-80 sm:w-96 sm:h-96 bg-primary/10 rounded-full filter blur-3xl -z-10" />
 
-        <div className="mb-8 sm:mb-12 md:mb-16">
+        <div className="mb-8 sm:mb-12 md:mb-16 animate-fade-in-up animate-stagger-1">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
-            New <span className="neon-accent">Collection</span>
+            Yangi <span className="neon-accent">Kolleksiya</span>
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg px-2">Explore our latest futuristic designs</p>
+          <p className="text-muted-foreground text-base sm:text-lg px-2">Eng so'ngi futuristik dizaynlarimizni o'rganing</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {products.map((product) => (
-            <div key={product.id} className="w-full">
+          {products.map((product, index) => (
+            <div key={product.id} className="w-full animate-fade-in-up animate-stagger-2" style={{ animationDelay: `${0.1 * (index + 1)}s` }}>
               <ProductCard {...product} />
             </div>
           ))}

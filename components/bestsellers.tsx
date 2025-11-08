@@ -29,7 +29,7 @@ const bestsellers = [
   },
   {
     id: 8,
-    name: "Zenith Coat",
+    name: "Zenith Coat", 
     category: "Outerwear",
     price: "$1,899",
     image: "/luxury-premium-coat.jpg",
@@ -44,16 +44,16 @@ export default function Bestsellers() {
         {/* Background blur elements */}
         <div className="absolute -bottom-40 -right-40 w-80 h-80 sm:w-96 sm:h-96 bg-accent/10 rounded-full filter blur-3xl -z-10" />
 
-        <div className="mb-8 sm:mb-12 md:mb-16">
+        <div className="mb-8 sm:mb-12 md:mb-16 animate-fade-in-up animate-stagger-1">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
-            <span className="neon-accent">Bestsellers</span> This Season
+            <span className="neon-accent">Bestseller</span> Mahsulotlar
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg px-2">Most loved by our community</p>
+          <p className="text-muted-foreground text-base sm:text-lg px-2">Bizning jamiyat tomonidan eng sevilgan</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {bestsellers.map((product) => (
-            <div key={product.id} className="w-full">
+          {bestsellers.map((product, index) => (
+            <div key={product.id} className="w-full animate-fade-in-up animate-stagger-2" style={{ animationDelay: `${0.15 * (index + 1)}s` }}>
               <ProductCard {...product} />
             </div>
           ))}

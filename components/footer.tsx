@@ -99,14 +99,18 @@ export default function Footer() {
         <div className="border-t border-border/50 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm text-center sm:text-left">© 2025 LUXE Fashion. All rights reserved.</p>
           <div className="flex gap-3 sm:gap-4">
-            {[Facebook, Instagram, Twitter, Linkedin].map((Icon, i) => (
-              <button 
-                key={i} 
-                className="p-2 hover:bg-white/10 rounded-lg transition-all group min-w-[40px] min-h-[40px] flex items-center justify-center"
-              >
-                <Icon size={18} className="text-muted-foreground group-hover:text-accent transition-colors sm:w-5 sm:h-5" />
-              </button>
-            ))}
+            <button className="p-2 hover:bg-white/10 rounded-lg transition-all group min-w-[40px] min-h-[40px] flex items-center justify-center">
+              <Facebook size={18} className="text-muted-foreground group-hover:text-accent transition-colors sm:w-5 sm:h-5" />
+            </button>
+            <button className="p-2 hover:bg-white/10 rounded-lg transition-all group min-w-[40px] min-h-[40px] flex items-center justify-center">
+              <Instagram size={18} className="text-muted-foreground group-hover:text-accent transition-colors sm:w-5 sm:h-5" />
+            </button>
+            <button className="p-2 hover:bg-white/10 rounded-lg transition-all group min-w-[40px] min-h-[40px] flex items-center justify-center">
+              <Twitter size={18} className="text-muted-foreground group-hover:text-accent transition-colors sm:w-5 sm:h-5" />
+            </button>
+            <button className="p-2 hover:bg-white/10 rounded-lg transition-all group min-w-[40px] min-h-[40px] flex items-center justify-center">
+              <Linkedin size={18} className="text-muted-foreground group-hover:text-accent transition-colors sm:w-5 sm:h-5" />
+            </button>
           </div>
         </div>
       </div>

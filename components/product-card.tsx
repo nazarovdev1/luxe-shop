@@ -49,14 +49,14 @@ export default function ProductCard({ id, name, category, price, image, badge }:
       <div className="group relative w-full" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
         {/* Card Container */}
         <div
-          className="relative rounded-xl overflow-hidden glassmorphism p-3 sm:p-4 transition-all duration-500 hover:shadow-2xl w-full h-full"
+          className="relative rounded-xl overflow-hidden glassmorphism p-3 sm:p-4 transition-all duration-500 hover:shadow-2xl w-full h-full animate-fade-in-up"
           style={{
             boxShadow: isHovered ? "0 0 40px rgba(147, 112, 219, 0.4)" : "0 0 20px rgba(147, 112, 219, 0.1)",
           }}
         >
           {/* Badge */}
           {badge && (
-            <div className="absolute top-3 left-3 z-20 bg-accent text-accent-foreground px-2 py-1 sm:px-3 rounded-full text-xs font-bold uppercase tracking-wide">
+            <div className="absolute top-3 left-3 z-20 bg-accent text-accent-foreground px-2 py-1 sm:px-3 rounded-full text-xs font-bold uppercase tracking-wide animate-fade-in-scale">
               {badge}
             </div>
           )}
@@ -84,35 +84,16 @@ export default function ProductCard({ id, name, category, price, image, badge }:
 
           {/* Product Info */}
           <div className="space-y-2 sm:space-y-3">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide leading-relaxed">{category}</p>
-            <h3 className="text-sm sm:text-base lg:text-lg font-semibold group-hover:text-accent transition-colors leading-tight">{name}</h3>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide leading-relaxed animate-fade-in-left">{category}</p>
+            <h3 className="text-sm sm:text-base lg:text-lg font-semibold group-hover:text-accent transition-colors leading-tight animate-fade-in-left" style={{ animationDelay: "0.1s" }}>
+              {name}
+            </h3>
             <div className="flex items-center justify-between">
-              <span className="text-lg sm:text-xl font-bold text-accent">{price}</span>
+              <span className="text-lg sm:text-xl font-bold text-accent animate-fade-in-left" style={{ animationDelay: "0.2s" }}>{price}</span>
               <div className="flex items-center gap-2">
-                {/* <button
-                  onClick={handleAddToCartClick}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-all min-w-[36px] min-h-[36px] flex items-center justify-center"
-                  title="Add to Cart"
-                >
-                  <svg 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                    className="text-muted-foreground hover:text-accent transition-colors sm:w-5 sm:h-5"
-                  >
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="m1 1 4 4 14 4-4 14H5"></path>
-                  </svg>
-                </button> */}
                 <button
                   onClick={() => setIsWishlisted(!isWishlisted)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-all min-w-[36px] min-h-[36px] flex items-center justify-center"
+                  className="p-2 hover:bg-white/10 rounded-lg transition-all min-w-[36px] min-h-[36px] flex items-center justify-center animate-fade-in-right"
                 >
                   <Heart
                     size={16}
