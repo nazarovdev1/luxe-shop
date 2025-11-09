@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Heart, Eye } from "lucide-react"
-import ProductModal from "./product-modal"
-import { useCart } from "@/contexts/cart-context"
+import { Heart } from "lucide-react"
+import TestModal from "./test-modal"
 
 interface ProductCardProps {
   id: number
@@ -16,9 +15,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ id, name, category, price, image, badge }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { addToCart } = useCart()
 
   const product = {
     id,
@@ -34,26 +31,15 @@ export default function ProductCard({ id, name, category, price, image, badge }:
     setIsModalOpen(true)
   }
 
-  const handleAddToCartClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    addToCart(product)
-    // Optional: Show success notification
-  }
-
   const handleCloseModal = () => {
     setIsModalOpen(false)
   }
 
   return (
     <>
-      <div className="group relative w-full" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <div className="group relative w-full">
         {/* Card Container */}
-        <div
-          className="relative rounded-xl overflow-hidden glassmorphism p-3 sm:p-4 transition-all duration-500 hover:shadow-2xl w-full h-full animate-fade-in-up"
-          style={{
-            boxShadow: isHovered ? "0 0 40px rgba(147, 112, 219, 0.4)" : "0 0 20px rgba(147, 112, 219, 0.1)",
-          }}
-        >
+        <div className="relative rounded-xl overflow-hidden glassmorphism p-3 sm:p-4 transition-all duration-500 hover:shadow-2xl w-full h-full animate-fade-in-up">
           {/* Badge */}
           {badge && (
             <div className="absolute top-3 left-3 z-20 bg-accent text-accent-foreground px-2 py-1 sm:px-3 rounded-full text-xs font-bold uppercase tracking-wide animate-fade-in-scale">
@@ -66,20 +52,9 @@ export default function ProductCard({ id, name, category, price, image, badge }:
             <img
               src={image || "/placeholder.svg"}
               alt={name}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
+              onClick={handleViewClick}
             />
-
-            {/* Overlay Actions - Only Eye Icon */}
-            {isHovered && (
-              <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center animate-in fade-in">
-                <button 
-                  onClick={handleViewClick}
-                  className="glow-button p-3 sm:p-4 bg-primary hover:bg-accent text-white rounded-full transition-all hover:scale-110 min-w-[48px] min-h-[48px] sm:min-w-[56px] sm:min-h-[56px] flex items-center justify-center"
-                >
-                  <Eye size={20} className="sm:w-6 sm:h-6" />
-                </button>
-              </div>
-            )}
           </div>
 
           {/* Product Info */}
@@ -107,7 +82,7 @@ export default function ProductCard({ id, name, category, price, image, badge }:
       </div>
 
       {/* Product Modal */}
-      <ProductModal
+      <TestModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         product={product}

@@ -1,29 +1,50 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { X, Heart, ShoppingBag, Star } from "lucide-react"
-import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
 
-interface ProductModalProps {
-  isOpen: boolean
-  onClose: () => void
-  product: {
-    id: number
-    name: string
-    category: string
-    price: string
-    image: string
-    badge?: string
-  } | null
+interface Product {
+  id: number
+  name: string
+  category: string
+  price: string
+  image: string
+  badge?: string
 }
 
-export default function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
+export default function ProductView() {
+  const [product, setProduct] = useState<Product | null>(null)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [selectedColor, setSelectedColor] = useState<number>(0)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const { addToCart } = useCart()
 
-  if (!isOpen || !product) return null
+  useEffect(() => {
+    // Get product data from URL parameters
+    const urlParams = new URLSearchParams(window.location.search)
+    const dataParam = urlParams.get('data')
+    
+    if (dataParam) {
+      try {
+        const decodedData = JSON.parse(decodeURIComponent(dataParam))
+        setProduct(decodedData)
+      } catch (error) {
+        console.error('Error parsing product data:', error)
+      }
+    }
+  }, [])
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading product...</p>
+        </div>
+      </div>
+    )
+  }
 
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"]
   const colors = [
@@ -42,7 +63,7 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
       addToCart(product, selectedSize, colors[selectedColor]?.name)
       setTimeout(() => {
         setIsAddingToCart(false)
-        onClose()
+        window.close()
       }, 1000)
     } catch (error) {
       setIsAddingToCart(false)
@@ -52,28 +73,24 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
   const isAddToCartDisabled = !selectedSize || isAddingToCart
 
   return (
-    <div className="fixed inset-0 z-50">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black bg-opacity-80 cursor-pointer"
-        onClick={onClose}
-      />
-      
-      {/* Modal */}
-      <div className="relative w-full max-w-6xl max-h-[90vh] mx-auto my-8 bg-white overflow-y-auto rounded-lg shadow-2xl">
-        {/* Close Button */}
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <div className="bg-white border-b px-6 py-4 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-900">Product Details</h1>
         <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 hover:text-gray-800 transition-all"
+          onClick={() => window.close()}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
-          <X size={20} />
+          <X size={24} className="text-gray-600" />
         </button>
+      </div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[90vh]">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left Side - Product Image */}
-          <div className="flex items-center justify-center p-8 bg-gray-50">
-            <div className="relative w-full max-w-lg">
+          <div className="space-y-6">
+            <div className="relative">
               {product.badge && (
                 <div className="absolute top-4 left-4 z-10 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                   {product.badge}
@@ -88,7 +105,7 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
           </div>
 
           {/* Right Side - Product Details */}
-          <div className="flex flex-col p-8 lg:p-12 space-y-6">
+          <div className="space-y-6">
             {/* Category */}
             <p className="text-sm text-gray-500 uppercase tracking-wide">
               {product.category}
@@ -120,7 +137,7 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
               <p className="text-gray-600 leading-relaxed">
                 Experience the future of fashion with this revolutionary piece. 
                 Crafted with premium materials and innovative design, this item represents 
-                the pinnacle of luxury and comfort.
+                the pinnacle of luxury and comfort. Perfect for those who dare to stand out.
               </p>
             </div>
 

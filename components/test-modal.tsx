@@ -1,10 +1,10 @@
 "use client"
 
-import { X, Heart, ShoppingBag, Star } from "lucide-react"
 import { useState } from "react"
-import { useCart } from "@/contexts/cart-context"
+import { X, ShoppingBag, Star } from "lucide-react"
+import { useCart } from "../contexts/cart-context"
 
-interface ProductModalProps {
+interface TestModalProps {
   isOpen: boolean
   onClose: () => void
   product: {
@@ -17,7 +17,7 @@ interface ProductModalProps {
   } | null
 }
 
-export default function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
+export default function TestModal({ isOpen, onClose, product }: TestModalProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [selectedColor, setSelectedColor] = useState<number>(0)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
@@ -179,9 +179,6 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
               >
                 <ShoppingBag size={20} />
                 <span>{isAddingToCart ? "Adding..." : "Add to Cart"}</span>
-              </button>
-              <button className="p-4 border-2 border-gray-300 hover:border-gray-400 rounded-lg transition-colors">
-                <Heart size={20} className="text-gray-600" />
               </button>
             </div>
 
