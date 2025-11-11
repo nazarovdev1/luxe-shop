@@ -3,15 +3,20 @@
 import { useState, useEffect, useRef } from "react"
 import { ShoppingCart, Menu, X, Search } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
+import { useSearch } from "@/contexts/search-context"
 import CartDropdown from "./cart-dropdown"
+import SearchDropdown from "./search-dropdown"
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false)
+  const [searchDropdownOpen, setSearchDropdownOpen] = useState(false)
   const { getTotalItems } = useCart()
+  const { closeSearch } = useSearch()
   const cartCount = getTotalItems()
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const cartDropdownRef = useRef<HTMLDivElement>(null)
+  const searchDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,11 +26,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (cartDropdownRef.current && !cartDropdownRef.current.contains(event.target as Node)) {
         setCartDropdownOpen(false)
+      }
+      if (searchDropdownRef.current && !searchDropdownRef.current.contains(event.target as Node)) {
+        setSearchDropdownOpen(false)
       }
     }
 
@@ -50,6 +58,18 @@ export default function Navbar() {
   const handleCartClick = (e: React.MouseEvent) => {
     e.stopPropagation()
     setCartDropdownOpen(!cartDropdownOpen)
+    setSearchDropdownOpen(false) // Close search when cart opens
+  }
+
+  const handleSearchClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setSearchDropdownOpen(!searchDropdownOpen)
+    setCartDropdownOpen(false) // Close cart when search opens
+  }
+
+  const handleSearchClose = () => {
+    setSearchDropdownOpen(false)
+    closeSearch()
   }
 
   return (
@@ -91,15 +111,25 @@ export default function Navbar() {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-2 sm:gap-4 relative" ref={dropdownRef}>
-            <button 
-              className="hidden sm:block p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] animate-fade-in-right animate-stagger-5"
-            >
-              <Search size={20} />
-            </button>
+          <div className="flex items-center gap-2 sm:gap-4 relative">
+            {/* Search Button with Dropdown */}
+            <div className="relative" ref={searchDropdownRef}>
+              <button 
+                onClick={handleSearchClick}
+                className="hidden sm:block p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] animate-fade-in-right animate-stagger-5 relative"
+              >
+                <Search size={20} />
+              </button>
+              
+              {/* Search Dropdown */}
+              <SearchDropdown 
+                isOpen={searchDropdownOpen}
+                onClose={handleSearchClose}
+              />
+            </div>
             
             {/* Cart Button with Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={cartDropdownRef}>
               <button 
                 onClick={handleCartClick}
                 className="relative p-2 sm:p-3 hover:bg-white/10 rounded-lg transition-all group min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center animate-fade-in-right animate-stagger-6"
@@ -150,10 +180,13 @@ export default function Navbar() {
               Bog'lanish
             </button>
             <div className="pt-2 border-t border-white/10">
-              <div className="flex items-center gap-2 hover:text-accent transition-colors text-sm uppercase tracking-wide py-2 min-h-[44px] w-full opacity-50">
+              <button 
+                onClick={handleSearchClick}
+                className="flex items-center gap-2 hover:text-accent transition-colors text-sm uppercase tracking-wide py-2 min-h-[44px] w-full text-left"
+              >
                 <Search size={16} />
                 <span>Qidirish</span>
-              </div>
+              </button>
             </div>
           </div>
         )}

@@ -4,33 +4,36 @@ import React, { useEffect, useRef } from "react"
 import { X, Search } from "lucide-react"
 import { useSearch } from "@/contexts/search-context"
 
-export default function SearchModal() {
-  const { isSearchOpen, searchQuery, setSearchQuery, closeSearch } = useSearch()
+interface SearchDropdownProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
+export default function SearchDropdown({ isOpen, onClose }: SearchDropdownProps) {
+  const { searchQuery, setSearchQuery } = useSearch()
   const searchInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (isSearchOpen) {
-      // Reset search query when modal opens
+    if (isOpen) {
       setSearchQuery("")
-      // Focus the search input
       if (searchInputRef.current) {
         searchInputRef.current.focus()
       }
     }
-  }, [isSearchOpen, setSearchQuery])
+  }, [isOpen, setSearchQuery])
 
-  if (!isSearchOpen) return null
+  if (!isOpen) return null
 
   return (
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
-        onClick={closeSearch}
+        className="fixed inset-0 z-40"
+        onClick={onClose}
       />
       
-      {/* Search Modal */}
-      <div className="fixed inset-x-4 top-4 bottom-4 sm:inset-x-auto sm:top-20 sm:left-1/2 sm:transform sm:-translate-x-1/2 sm:w-[500px] bg-background border border-border rounded-2xl shadow-2xl z-50 flex flex-col">
+      {/* Dropdown Content */}
+      <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-background border border-border rounded-2xl shadow-2xl z-50">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
           <h3 className="text-lg font-semibold flex items-center gap-2">
@@ -38,7 +41,7 @@ export default function SearchModal() {
             Qidirish
           </h3>
           <button
-            onClick={closeSearch}
+            onClick={onClose}
             className="p-1 hover:bg-white/10 rounded-lg transition-colors flex items-center justify-center"
           >
             <X size={18} />
@@ -61,12 +64,17 @@ export default function SearchModal() {
         </div>
 
         {/* Empty Content Area */}
-        <div className="flex-1 flex items-center justify-center p-8">
-          <div className="text-center text-muted-foreground">
-            <Search size={48} className="mx-auto mb-4 opacity-50" />
-            <p>Qidirish funksiyasi faqat matn kiritish uchun</p>
-            <p className="text-xs mt-2">Mahsulotlar ko'rsatilmaydi</p>
-          </div>
+        <div className="p-8 text-center text-muted-foreground">
+          <Search size={32} className="mx-auto mb-2 opacity-50" />
+          <p>Qidirish funksiyasi faqat matn kiritish uchun</p>
+          <p className="text-xs mt-1">Mahsulotlar ko'rsatilmaydi</p>
+        </div>
+
+        {/* Footer - Always Visible */}
+        <div className="border-t border-border p-4 text-center">
+          <p className="text-xs text-muted-foreground">
+            Mahsulotlar ko'rsatilmaydi
+          </p>
         </div>
       </div>
     </>

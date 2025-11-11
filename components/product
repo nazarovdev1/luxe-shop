@@ -27,32 +27,37 @@ export default function ProductCard({ product, className = "" }: ProductCardProp
     setShowModal(true)
   }
 
-  const handleAddToCart = () => {
-    if (product.sizes && product.sizes.length > 0 && !selectedSize) {
-      alert("Iltimos, o'lchamni tanlang")
-      return
-    }
-    if (product.colors && product.colors.length > 0 && !selectedColor) {
-      alert("Iltimos, rangni tanlang")
-      return
-    }
+const handleAddToCart = () => {
+  if (product.sizes && product.sizes.length > 0 && !selectedSize) {
+    alert("Iltimos, o'lchamni tanlang")
+    return
+  }
+  if (product.colors && product.colors.length > 0 && !selectedColor) {
+    alert("Iltimos, rangni tanlang")
+    return
+  }
 
-    // Add to cart with the specified quantity
-    addToCart({
+  // ✅ Add to cart one time, but include quantity
+  addToCart(
+    {
       id: product.id,
       name: product.name,
       category: product.category,
       price: product.price,
       image: product.image,
-      badge: product.badge
-    }, selectedSize, selectedColor, quantity)
+      badge: product.badge,
+    },
+    selectedSize,
+    selectedColor,
+    quantity // yangi argument
+  )
 
-    // Reset and close modal
-    setSelectedSize("")
-    setSelectedColor("")
-    setQuantity(1)
-    setShowModal(false)
-  }
+  // Reset and close modal
+  setSelectedSize("")
+  setSelectedColor("")
+  setQuantity(1)
+  setShowModal(false)
+}
 
   const handleQuantityChange = (change: number) => {
     setQuantity(Math.max(1, quantity + change))

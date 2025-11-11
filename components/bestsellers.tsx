@@ -1,41 +1,7 @@
 "use client"
 
 import ProductCard from "./product-card"
-
-const bestsellers = [
-  {
-    id: 5,
-    name: "Stellar Sweater",
-    category: "Tops",
-    price: "$449",
-    image: "/luxury-cozy-sweater.jpg",
-    badge: "BESTSELLER",
-  },
-  {
-    id: 6,
-    name: "Eclipse Blazer",
-    category: "Outerwear",
-    price: "$1,199",
-    image: "/luxury-tailored-blazer.jpg",
-    badge: "BESTSELLER",
-  },
-  {
-    id: 7,
-    name: "Aurora Skirt",
-    category: "Bottoms",
-    price: "$699",
-    image: "/luxury-elegant-skirt.jpg",
-    badge: "BESTSELLER",
-  },
-  {
-    id: 8,
-    name: "Zenith Coat", 
-    category: "Outerwear",
-    price: "$1,899",
-    image: "/luxury-premium-coat.jpg",
-    badge: "BESTSELLER",
-  },
-]
+import { bestsellerProducts } from "@/data/products"
 
 export default function Bestsellers() {
   return (
@@ -45,17 +11,19 @@ export default function Bestsellers() {
         <div className="absolute -bottom-40 -right-40 w-80 h-80 sm:w-96 sm:h-96 bg-accent/10 rounded-full filter blur-3xl -z-10" />
 
         <div className="mb-8 sm:mb-12 md:mb-16 animate-fade-in-up animate-stagger-1">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-left">
             <span className="neon-accent">Bestseller</span> Mahsulotlar
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg px-2">Bizning jamiyat tomonidan eng sevilgan</p>
+          <p className="text-muted-foreground text-base sm:text-lg text-left">Bizning jamiyat tomonidan eng sevilgan</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {bestsellers.map((product, index) => (
-            <div key={product.id} className="w-full animate-fade-in-up animate-stagger-2" style={{ animationDelay: `${0.15 * (index + 1)}s` }}>
-              <ProductCard {...product} />
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 justify-items-center">
+          {bestsellerProducts.map((product) => (
+            <ProductCard 
+              key={product.id} 
+              product={product}
+              className="animate-fade-in-up animate-stagger-2"
+            />
           ))}
         </div>
       </div>

@@ -26,7 +26,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-4xl px-4 sm:px-6 md:px-8 py-8 sm:py-12">
+      <div className="relative z-10 text-left max-w-4xl px-4 sm:px-6 md:px-8 py-8 sm:py-12">
         <div className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 glassmorphism animate-fade-in-up animate-stagger-1">
           <Sparkles size={14} className="text-accent sm:w-4 sm:h-4" />
           <span className="text-xs sm:text-sm tracking-wide">YANGI KOLLEKTSIYA 2025</span>
@@ -36,11 +36,11 @@ export default function Hero() {
           O'z Uslubingizni Qayta Aniqlang
         </h1>
 
-        <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 text-balance max-w-2xl mx-auto text-white animate-fade-in-up animate-stagger-3">
+        <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 text-balance max-w-2xl text-white animate-fade-in-up animate-stagger-3">
           Futuristik dizayn bilan zamonaviy hashamatni bosing. Farq qilishga jur'at etganlar uchun yaratilgan.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up animate-stagger-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start animate-fade-in-up animate-stagger-4">
           <button className="glow-button group px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all text-sm sm:text-base">
             Hozir Sotib Oling
             <ChevronRight className="inline ml-2 group-hover:translate-x-1 transition-transform" size={18} />
@@ -60,7 +60,7 @@ export default function Hero() {
           }}
         >
           <img 
-            src="/futuristic-fashion-hologram.jpg" 
+            src="/349345-4k-wallpaper.jpg" 
             alt="Hashtag modellas" 
             className="w-full h-full object-cover" 
           />

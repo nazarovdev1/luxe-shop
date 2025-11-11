@@ -70,7 +70,7 @@ export default function CartDropdown({ isOpen, onClose }: CartDropdownProps) {
                         <span className="text-xs text-muted-foreground">{item.color}</span>
                       )}
                     </div>
-                    <p className="text-sm font-semibold text-accent mt-1">{item.price}</p>
+                    <p className="text-sm font-semibold text-accent mt-5">{item.price}</p>
                   </div>
 
                   {/* Quantity Controls - Centered */}

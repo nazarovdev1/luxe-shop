@@ -1,196 +1,184 @@
 "use client"
 
-import { X, Heart, ShoppingBag, Star } from "lucide-react"
 import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
+import type { Product } from "@/data/products"
 
 interface ProductModalProps {
+  product: Product | null
   isOpen: boolean
   onClose: () => void
-  product: {
-    id: number
-    name: string
-    category: string
-    price: string
-    image: string
-    badge?: string
-  } | null
 }
 
-export default function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
-  const [selectedSize, setSelectedSize] = useState<string | null>(null)
-  const [selectedColor, setSelectedColor] = useState<number>(0)
-  const [isAddingToCart, setIsAddingToCart] = useState(false)
+export default function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
+  const [selectedSize, setSelectedSize] = useState<string>("")
+  const [selectedColor, setSelectedColor] = useState<string>("")
+  const [quantity, setQuantity] = useState(1)
   const { addToCart } = useCart()
 
-  if (!isOpen || !product) return null
+  if (!product || !isOpen) return null
 
-  const sizes = ["XS", "S", "M", "L", "XL", "XXL"]
-  const colors = [
-    { name: "Black", class: "bg-black" },
-    { name: "White", class: "bg-white border-2 border-gray-300" },
-    { name: "Gray", class: "bg-gray-500" },
-    { name: "Blue", class: "bg-blue-600" },
-    { name: "Red", class: "bg-red-600" },
-  ]
-
-  const handleAddToCart = async () => {
-    if (!selectedSize) return
-    
-    setIsAddingToCart(true)
-    try {
-      addToCart(product, selectedSize, colors[selectedColor]?.name)
-      setTimeout(() => {
-        setIsAddingToCart(false)
-        onClose()
-      }, 1000)
-    } catch (error) {
-      setIsAddingToCart(false)
+  const handleAddToCart = () => {
+    if (product.sizes && product.sizes.length > 0 && !selectedSize) {
+      alert("Iltimos, o'lchamni tanlang")
+      return
     }
+    if (product.colors && product.colors.length > 0 && !selectedColor) {
+      alert("Iltimos, rangni tanlang")
+      return
+    }
+
+    // Add to cart multiple times based on quantity
+    for (let i = 0; i < quantity; i++) {
+      addToCart({
+        id: product.id,
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        image: product.image,
+        badge: product.badge
+      }, selectedSize, selectedColor)
+    }
+
+    // Reset and close modal
+    setSelectedSize("")
+    setSelectedColor("")
+    setQuantity(1)
+    onClose()
   }
 
-  const isAddToCartDisabled = !selectedSize || isAddingToCart
+  const handleQuantityChange = (change: number) => {
+    setQuantity(Math.max(1, quantity + change))
+  }
 
   return (
-    <div className="fixed inset-0 z-50">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black bg-opacity-80 cursor-pointer"
-        onClick={onClose}
-      />
-      
-      {/* Modal */}
-      <div className="relative w-full max-w-6xl max-h-[90vh] mx-auto my-8 bg-white overflow-y-auto rounded-lg shadow-2xl">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 hover:text-gray-800 transition-all"
-        >
-          <X size={20} />
-        </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="bg-background rounded-lg shadow-lg max-w-4xl max-h-[90vh] overflow-y-auto m-4 w-full">
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 border-b border-border">
+          <h2 className="text-xl font-bold">{product.name}</h2>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-accent transition-colors"
+          >
+            ✕
+          </button>
+        </div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[90vh]">
-          {/* Left Side - Product Image */}
-          <div className="flex items-center justify-center p-8 bg-gray-50">
-            <div className="relative w-full max-w-lg">
-              {product.badge && (
-                <div className="absolute top-4 left-4 z-10 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                  {product.badge}
-                </div>
-              )}
-              <img
-                src={product.image || "/placeholder.svg"}
-                alt={product.name}
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+          {/* Product Image */}
+          <div className="relative">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full aspect-[3/4] object-cover rounded-lg"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "/placeholder.jpg"
+              }}
+            />
+            {product.badge && (
+              <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs px-2 py-1 rounded">
+                {product.badge}
+              </span>
+            )}
           </div>
 
-          {/* Right Side - Product Details */}
-          <div className="flex flex-col p-8 lg:p-12 space-y-6">
-            {/* Category */}
-            <p className="text-sm text-gray-500 uppercase tracking-wide">
-              {product.category}
-            </p>
-
-            {/* Product Name */}
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900">
-              {product.name}
-            </h1>
-
-            {/* Price */}
-            <p className="text-3xl font-bold text-blue-600">
-              {product.price}
-            </p>
-
-            {/* Rating */}
+          {/* Product Details */}
+          <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star key={star} size={20} className="fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <span className="text-gray-600">(4.9/5 - 127 reviews)</span>
+              {product.rating && (
+                <div className="flex items-center">
+                  <span className="text-yellow-400">⭐</span>
+                  <span className="text-sm text-muted-foreground ml-1">{product.rating}</span>
+                </div>
+              )}
+              <span className="text-sm text-muted-foreground">{product.category}</span>
             </div>
 
-            {/* Description */}
-            <div>
-              <h3 className="text-lg font-semibold mb-2">Description</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Experience the future of fashion with this revolutionary piece. 
-                Crafted with premium materials and innovative design, this item represents 
-                the pinnacle of luxury and comfort.
-              </p>
-            </div>
-
-            {/* Size Selection */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Select Size</h3>
-              <div className="grid grid-cols-3 gap-3">
-                {sizes.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`py-3 px-4 border-2 rounded-lg font-medium transition-all ${
-                      selectedSize === size
-                        ? "border-blue-500 bg-blue-50 text-blue-700"
-                        : "border-gray-300 hover:border-gray-400 text-gray-700"
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Color Selection */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Select Color</h3>
-              <div className="flex space-x-4">
-                {colors.map((color, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedColor(index)}
-                    className={`w-12 h-12 rounded-full border-4 transition-all ${
-                      color.class
-                    } ${
-                      selectedColor === index 
-                        ? "border-blue-500 ring-2 ring-blue-200" 
-                        : "border-gray-300"
-                    }`}
-                    title={color.name}
-                  />
-                ))}
-              </div>
-              {selectedColor !== null && (
-                <p className="text-sm text-gray-600 mt-2">
-                  Selected: {colors[selectedColor].name}
-                </p>
+            <div className="flex items-center space-x-3">
+              <span className="text-3xl font-bold">{product.price}</span>
+              {product.originalPrice && (
+                <span className="text-lg text-muted-foreground line-through">
+                  {product.originalPrice}
+                </span>
               )}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex space-x-4 pt-4">
-              <button 
-                onClick={handleAddToCart}
-                disabled={isAddToCartDisabled}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2"
-              >
-                <ShoppingBag size={20} />
-                <span>{isAddingToCart ? "Adding..." : "Add to Cart"}</span>
-              </button>
-              <button className="p-4 border-2 border-gray-300 hover:border-gray-400 rounded-lg transition-colors">
-                <Heart size={20} className="text-gray-600" />
-              </button>
+            {product.description && (
+              <p className="text-muted-foreground">{product.description}</p>
+            )}
+
+            {/* Color Selection */}
+            {product.colors && product.colors.length > 0 && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Rang tanlang:</label>
+                <div className="flex flex-wrap gap-2">
+                  {product.colors.map((color) => (
+                    <button
+                      key={color}
+                      onClick={() => setSelectedColor(color)}
+                      className={`px-3 py-1 text-sm rounded-full border transition-colors ${
+                        selectedColor === color
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-background border-border hover:border-primary"
+                      }`}
+                    >
+                      {color}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Size Selection */}
+            {product.sizes && product.sizes.length > 0 && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">O'lcham tanlang:</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {product.sizes.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`py-2 text-sm rounded border transition-colors ${
+                        selectedSize === size
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-background border-border hover:border-primary"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quantity Selection */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Miqdor:</label>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => handleQuantityChange(-1)}
+                  className="p-1 rounded-full border border-border hover:border-primary transition-colors"
+                >
+                  −
+                </button>
+                <span className="text-lg font-medium w-8 text-center">{quantity}</span>
+                <button
+                  onClick={() => handleQuantityChange(1)}
+                  className="p-1 rounded-full border border-border hover:border-primary transition-colors"
+                >
+                  +
+                </button>
+              </div>
             </div>
 
-            {/* Size Alert */}
-            {!selectedSize && (
-              <p className="text-sm text-orange-600">
-                Please select a size to add to cart
-              </p>
-            )}
+            {/* Add to Cart Button */}
+            <button
+              onClick={handleAddToCart}
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-lg rounded-md transition-colors"
+            >
+              🛒 Savatga qo'shish
+            </button>
           </div>
         </div>
       </div>

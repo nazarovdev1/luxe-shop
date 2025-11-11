@@ -9,16 +9,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
           {/* Brand */}
           <div className="col-span-1 sm:col-span-2 md:col-span-1">
-            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-left">
               <span className="neon-accent">LUXE</span>
             </h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="text-muted-foreground text-sm leading-relaxed text-left">
               Redefining luxury fashion with futuristic design and cutting-edge technology.
             </p>
           </div>
 
           {/* Links */}
-          <div>
+          <div className="text-left">
             <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Shop</h4>
             <ul className="space-y-2 text-muted-foreground text-sm">
               <li>
@@ -45,7 +45,7 @@ export default function Footer() {
           </div>
 
           {/* About */}
-          <div>
+          <div className="text-left">
             <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">About</h4>
             <ul className="space-y-2 text-muted-foreground text-sm">
               <li>
@@ -72,7 +72,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="text-left">
             <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Contact</h4>
             <ul className="space-y-3 text-muted-foreground text-sm">
               <li className="flex items-start gap-2">
@@ -96,8 +96,8 @@ export default function Footer() {
         </div>
 
         {/* Social */}
-        <div className="border-t border-border/50 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-muted-foreground text-sm text-center sm:text-left">© 2025 LUXE Fashion. All rights reserved.</p>
+        <div className="border-t border-border/50 pt-6 sm:pt-8 flex flex-col sm:flex-row items-start justify-start gap-4">
+          <p className="text-muted-foreground text-sm text-left">© 2025 LUXE Fashion. All rights reserved.</p>
           <div className="flex gap-3 sm:gap-4">
             <button className="p-2 hover:bg-white/10 rounded-lg transition-all group min-w-[40px] min-h-[40px] flex items-center justify-center">
               <Facebook size={18} className="text-muted-foreground group-hover:text-accent transition-colors sm:w-5 sm:h-5" />

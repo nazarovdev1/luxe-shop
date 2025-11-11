@@ -40,11 +40,11 @@ export default function About() {
         <div className="absolute -top-40 -left-40 w-80 h-80 sm:w-96 sm:h-96 bg-primary/10 rounded-full filter blur-3xl -z-10" />
         <div className="absolute -bottom-40 -right-40 w-80 h-80 sm:w-96 sm:h-96 bg-accent/10 rounded-full filter blur-3xl -z-10" />
 
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 px-2">
+        <div className="text-left mb-12 sm:mb-16 md:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 pl-5">
             <span className="neon-accent">LUXE</span> Haqida
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4">
+          <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl px-4">
             Innovatsion dizayn, ilg'or texnologiya va sifatga sodiq qolgan holda hashamatli modani qayta aniqlaymiz. 
             Biz trendlarga ergashamiz - biz ularni yaratamiz.
           </p>
@@ -88,8 +88,8 @@ export default function About() {
         </div>
 
         {/* Mission Statement */}
-        <div className="mt-12 sm:mt-16 text-center">
-          <div className="glassmorphism p-8 sm:p-12 rounded-2xl max-w-4xl mx-auto">
+        <div className="mt-12 sm:mt-16 text-left flex justify-center">
+          <div className="glassmorphism p-8 sm:p-12 rounded-2xl max-w-4xl">
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
               Bizning <span className="neon-accent">Maqsadimiz</span>
             </h3>

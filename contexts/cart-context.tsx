@@ -17,11 +17,12 @@ interface CartItem {
 
 interface CartContextType {
   items: CartItem[]
-  addToCart: (product: Omit<CartItem, 'quantity' | 'key'>, size?: string, color?: string) => void
+  addToCart: (product: Omit<CartItem, 'quantity' | 'key'>, size?: string, color?: string, quantity?: number) => void
   removeFromCart: (key: string) => void
   updateQuantity: (key: string, quantity: number) => void
   getTotalItems: () => number
   getTotalPrice: () => string
+  clearCart: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -29,7 +30,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
 
-  const addToCart = (product: Omit<CartItem, 'quantity' | 'key'>, size?: string, color?: string) => {
+  const addToCart = (product: Omit<CartItem, 'quantity' | 'key'>, size?: string, color?: string, quantity: number = 1) => {
     setItems(currentItems => {
       // Create unique key for this product variant
       const itemKey = `${product.id}-${size || 'default'}-${color || 'default'}`
@@ -37,18 +38,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const existingItemIndex = currentItems.findIndex(item => item.key === itemKey)
 
       if (existingItemIndex >= 0) {
-        // Mahsulot allaqachon savatda bor - quantity ni oshirish
+        // Item already exists in cart - increase quantity by the specified amount
         const updatedItems = [...currentItems]
-        updatedItems[existingItemIndex].quantity += 1
+        updatedItems[existingItemIndex].quantity += quantity
         return updatedItems
       } else {
-        // Yangi mahsulot qo'shish
+        // Add new item
         const newItem: CartItem = { 
           ...product, 
           key: itemKey,
           size, 
           color, 
-          quantity: 1 
+          quantity: quantity
         }
         return [...currentItems, newItem]
       }
@@ -72,6 +73,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     )
   }
 
+  const clearCart = () => {
+    setItems([])
+  }
+
   const getTotalItems = () => {
     return items.reduce((total, item) => total + item.quantity, 0)
   }
@@ -91,7 +96,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       removeFromCart,
       updateQuantity,
       getTotalItems,
-      getTotalPrice
+      getTotalPrice,
+      clearCart
     }}>
       {children}
     </CartContext.Provider>
